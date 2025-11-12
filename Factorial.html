@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+		<style>
+				body {
+            font-family: "Lato", sans-serif; 
+        }
+
+
+				#mainbox {
+					position:static;
+					width:900px;
+					background-color:white;
+					border: 1px solid;
+					padding:10px;
+				}
+
+				#d0 {
+					position:static;
+					width:900px;
+					background-color:white;
+					border: 1px solid;
+					padding:10px;
+				}
+
+
+				.standard{
+					width:500px;
+					height:50px;
+				}
+
+				.blue{
+					background-color:white;
+				}
+
+				.purple{
+					background-color:white;
+				}
+				.links-container a {
+            		padding: 10px 15px;
+            		background-color: #0000cc;
+            		color: white;
+            		text-decoration: none;
+            		border-radius: 5px;
+        		}
+		</style>
+</head>
+<body>
+	<div id = "d0">
+		<h1> Factorial (While Loop), Sum (Do While Loop) and Average (For Loop) of First N Natural Numbers </h1>
+	</div>
+
+<div id="mainbox">
+	<h2> Factorial (While Loop) </h2>
+
+	<div id = "d1" class="box standard purple">
+
+		<label for ="n1"> Enter a number: </label>
+		<input id ="n1" name="n1" type="number">
+
+		<button onclick="computeFactorial()"> Compute Factorial </button>
+		<br>
+		<label for ="factorial" id="Factorial"> Factorial: </label>
+		<input id ="factorial" name="factorial" type="number" readonly>
+
+	</div>
+
+	<h2> Sum (Do While Loop) </h2>
+
+	<div id = "d1" class="box standard purple">
+
+		<label for ="n2"> Enter a number: </label>
+		<input id ="n2" name="n2" type="number">
+
+		<button onclick="computeSum()"> Compute Sum </button>
+		<br>
+		<label for ="sum" id="Sum"> Sum: </label>
+		<input id ="sum" name="sum" type="number" readonly>
+	</div>
+
+	<h2> Average (For Loop) of First N Natural Numbers </h2>
+
+	<div id = "d1" class="box standard purple">
+
+		<label for ="n3"> Enter a number: </label>
+		<input id ="n3" name="n3" type="number">
+
+		<button onclick="computeAverage()"> Compute Average </button>
+		<br>
+		<label for ="average" id="Average"> Average: </label>
+		<input id ="average" name="average" type="number" readonly>
+
+
+	</div>
+</div>
+<br>
+	<div class="links-container">
+        <a href = "homepage2.html"> Back to Home Page </a>
+    </div>
+	<script>
+		function computeFactorial()
+		{
+  			
+  			let i = document.getElementById("n1").value*1;
+  			let result = 1;
+  			while (i > 1) {
+  				result = result * i;
+  				i--;
+  			}
+			document.getElementById("factorial").value=result;
+		}
+		function computeSum()
+		{
+			let j = document.getElementById("n2").value*1;
+  			let result = 0;
+  			let a = 1;
+  			do{
+  				result = result + a;
+  				a++;
+  			} 
+  			while (a <= j)
+  			document.getElementById("sum").value=result;
+		}
+		function computeAverage() 
+		{
+			let k = document.getElementById("n3").value*1;
+  			let result = 0;
+
+  			for (let b = 0; b <= k; b++){
+  				result = result + b;
+  			}
+
+  			let aver = result/k;
+  			
+  			document.getElementById("average").value=aver;
+		}
+
+	</script>
+
+</body>
+</html>
+
+

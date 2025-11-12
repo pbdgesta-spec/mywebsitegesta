@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    table, thead, tbody, tfoot, td {
+        border: 5px solid #000000;
+        border-collapse: collapse;
+        padding: 8px;
+    }
+    body {
+            font-family: "Lato", sans-serif; 
+        }
+    #d0 {
+        position:static;
+        width:500px;
+        background-color:white;
+        border: 1px solid;
+        padding:10px;
+    }
+    .ndata {
+        text-align: right;
+    }
+    #gross-total, #deduct-total, #net-total {
+        text-align: right;
+        color: red;
+        font-weight: bold;
+    }
+    .input-controls {
+        position:static;
+        width:400px;
+        background-color:white;
+        border: 1px solid;
+        padding:10px;
+    }
+    .input-controls input {
+        margin-right: 20px;
+    }
+    .links-container a {
+            padding: 10px 15px;
+            background-color: #0000cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+    }
+</style>
+
+<body>
+    <div id = "d0">
+        <h1> The Payroll Program </h1>
+    </div>
+    <br>
+    <div id="d1" class="box standard purple input-controls">
+        <label for="name">Employee Name:</label>
+        <input id="name" name="name" type="text" value="New Employee">
+        <br>
+        <label for="days_worked">Days Worked:</label>
+        <input id="days_worked" name="days_worked" type="number" value="5">
+        <br>
+        <label for="daily_rate">Daily Rate:</label>
+        <input id="daily_rate" name="daily_rate" type="number" value="100.00">
+        <br>
+        <label for="deduct">Deduction Amount:</label>
+        <input id="deduct" name="deduct" type="number" value="50.00">
+
+        <br><br>
+        <button onclick="addEmployee()"> + Add Employee</button>
+        <button onclick="deleteEmployee()"> - Delete by No.</button>
+    </div>
+    <br>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Emp. No.</td>
+                <td>Employee Name</td>
+                <td>Days Worked</td>
+                <td>Daily Rate</td>
+                <td>Gross Pay</td>
+                <td>Deductions</td>
+                <td>Net Pay</td>
+            </tr>
+        </thead>
+        <tbody id="payroll-body">
+            <tr>
+                <td class="ndata">1</td>
+                <td>John Van Neumann</td>
+                <td class="ndata">3</td>
+                <td class="ndata">500.00</td>
+                <td class="ndata">1500.00</td>
+                <td class="ndata">300</td>
+                <td class="ndata">1200</td>
+            </tr>
+            <tr>
+                <td class="ndata">2</td>
+                <td>Charles W. Babbage</td>
+                <td class="ndata">4</td>
+                <td class="ndata">500.00</td>
+                <td class="ndata">2000.00</td>
+                <td class="ndata">500</td>
+                <td class="ndata">1500</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="gross-total" class="ndata">3500.00</td>
+                <td id="deduct-total" class="ndata">800.00</td>
+                <td id="net-total" class="ndata">2700.00</td>
+            </tr>
+        </tfoot>
+    </table>
+    <br><br>
+    <div class="links-container">
+        <a href = "homepage2.html"> Back to Home Page </a>
+    </div>
+
+    <script>
+        function getNumberValue(id) {
+            const value = parseFloat(document.getElementById(id).value);
+            return isNaN(value) ? 0 : value;
+        }
+
+        function updateTotals() {
+            const tableBody = document.getElementById('payroll-body');
+            const rows = tableBody.getElementsByTagName('tr');
+
+            let totalGross = 0;
+            let totalDeductions = 0;
+            let totalNet = 0;
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                
+                const gross = parseFloat(cells[4].textContent) || 0;
+                const deduct = parseFloat(cells[5].textContent) || 0;
+                const net = parseFloat(cells[6].textContent) || 0;
+
+                totalGross += gross;
+                totalDeductions += deduct;
+                totalNet += net;
+            }
+
+            document.getElementById('gross-total').textContent = totalGross.toFixed(2);
+            document.getElementById('deduct-total').textContent = totalDeductions.toFixed(2);
+            document.getElementById('net-total').textContent = totalNet.toFixed(2);
+        }
+
+        function addEmployee() {
+            const name = document.getElementById('name').value;
+            const daysWorked = getNumberValue('days_worked');
+            const dailyRate = getNumberValue('daily_rate');
+            const deduction = getNumberValue('deduct');
+
+            const grossPay = daysWorked * dailyRate;
+            const netPay = grossPay - deduction;
+            const tableBody = document.getElementById('payroll-body');
+            const nextEmpNo = tableBody.getElementsByTagName('tr').length + 1;
+            const newRow = tableBody.insertRow();
+            const values = [
+                nextEmpNo,
+                name,
+                daysWorked.toFixed(0),
+                dailyRate.toFixed(2),
+                grossPay.toFixed(2),
+                deduction.toFixed(2),
+                netPay.toFixed(2)
+            ];
+
+            for (let i = 0; i < values.length; i++) {
+                const newCell = newRow.insertCell(i);
+                newCell.textContent = values[i];
+                
+                if (i !== 1) { 
+                    newCell.classList.add('ndata');
+                }
+            }
+
+            updateTotals();
+        }
+
+        function deleteEmployee() {
+            const lineNumber = parseInt(prompt("Enter the Employee No. (Line Number) to delete:"), 10);
+
+            const tableBody = document.getElementById('payroll-body');
+            const rows = tableBody.getElementsByTagName('tr');
+            const rowIndexToDelete = lineNumber - 1; 
+
+            if (rowIndexToDelete >= 0 && rowIndexToDelete < rows.length) {
+                tableBody.deleteRow(rowIndexToDelete);
+                
+                for (let i = 0; i < rows.length; i++) {
+                    rows[i].cells[0].textContent = i + 1;
+                }
+
+                updateTotals();
+        }
+    }   
+        
+        updateTotals(); 
+    </script>
+
+</body>
+
+</html>

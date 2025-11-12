@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+	<style>
+		body {
+            font-family: "Lato", sans-serif; 
+        }
+		#d0 {
+			position:static;
+			width:500px;
+			background-color:white;
+			border: 1px solid;
+			padding:10px;
+		}
+		.box {
+			display:block;
+			border:1px solid;
+		}
+		.standard {
+			width:600px;
+			height:80px;
+		}
+		.purple{
+			background-color:#b3b3ff;
+		}
+		.blue{
+			background-color:white;
+		}
+		.links-container a {
+            padding: 10px 15px;
+            background-color: #0000cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+	</style>
+
+</head>
+<body>
+
+	<div id = "d0">
+		<h1> Income Tax Calculator </h1>
+	</div>
+<br><br>
+<div id = "d1" class="box standard blue">
+	<br>
+	<label for ="it"> Input Taxable Income: </label>
+	<input id ="it" name="it" type="number">
+
+	<button onclick="computeIncomeTax()"> Compute Income Tax </button>
+	<button onclick="clearvaluesIncometax()"> Clear Values </button>
+	<br>
+	<label for ="iT" id="IT"> Income Tax: </label>
+	<input id ="iT" name="iT" type="number" readonly>
+</div>
+
+<br>
+<div class="links-container">
+	<a href = "homepage2.html"> Back to Home Page </a>
+</div>
+
+<script>
+	
+function computeIncomeTax()
+{
+  var tax_income, rate, income_tax;
+  tax_income = document.getElementById("it").value*1;
+
+    if (tax_income > 8000000) {
+        rate = (tax_income - 8000000) * 0.35;
+        income_tax = 2410000 + rate;
+
+    } else if (tax_income > 2000000) {
+        rate = (tax_income - 2000000) * 0.32;
+        income_tax = 490000 + rate;
+
+    } else if (tax_income > 800000) {
+        rate = (tax_income - 800000) * 0.30;
+        income_tax = 130000 + rate;
+
+    } else if (tax_income > 400000) {
+        rate = (tax_income - 400000) * 0.25;
+        income_tax = 30000 + rate;
+
+    } else if (tax_income > 250000) {
+        rate = (tax_income - 250000) * 0.20;
+        income_tax = rate; // Base tax is ₱0
+        
+    } else { 
+        income_tax = 0;
+    }
+  document.getElementById("IT").innerHTML='Income Tax is:';
+  document.getElementById("iT").value = income_tax.toFixed(2);
+
+}
+
+function clearvaluesIncometax()
+{
+   document.getElementById("it").value='';
+   document.getElementById("IT").innerHTML='Income Tax is:';
+   document.getElementById("iT").value='';
+}
+
+</script>
+
+</body>
+
+</html>
+
+
